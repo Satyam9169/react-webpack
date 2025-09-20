@@ -148,3 +148,42 @@ Linting & formatting – ESLint + Prettier
 
 **Short Senior-Level Answer (Interview Style)**:  
 If I start a React project from scratch, I’d first clarify requirements and define an MVP. Then I’d set up a clean project structure with React + TypeScript, Redux Toolkit, and Vite/Webpack. I’d follow best practices like environment management, reusable components, error handling, and Git workflows. My focus would be on delivering in small milestones, documenting everything, and ensuring scalability for future developers.
+
+
+
+## Key Concepts
+
+### Minimum Viable Product (MVP)
+**Definition:** MVP is the simplest version of a product that includes only the core features necessary to solve a problem or deliver value to users.  
+**Purpose:** Launch quickly, gather user feedback, and iterate without overbuilding.  
+
+**Example (Todo App):**  
+- MVP: Add, edit, delete tasks  
+- Later features: Filters, categories, notifications, dark mode  
+
+---
+
+### Tree Shaking
+**Definition:** Tree shaking is a technique used by modern JavaScript bundlers (Webpack, Vite, Rollup) to remove unused code from the final bundle.  
+
+**Key Points:**  
+- Only includes code that is actually used in the app  
+- Works best with ES6 module syntax (`import` / `export`)  
+- Reduces bundle size and improves performance  
+
+**Example:**
+
+```js
+// utils.js
+export function usedFunc() {
+  console.log("I am used");
+}
+
+export function unusedFunc() {
+  console.log("I am never used");
+}
+
+// main.js
+import { usedFunc } from './utils.js';
+usedFunc();
+
