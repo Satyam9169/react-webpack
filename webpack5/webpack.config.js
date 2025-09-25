@@ -1,16 +1,15 @@
 // const { type } = require("os");
 const path = require("path");
-const TerserPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-
+const TerserPlugin = require("terser-webpack-plugin"); //TerserPlugin is a Webpack plugin that minifies / compresses your JavaScript code.
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // By default, this plugin will remove all files inside webpack's output.path directory, as well as all unused webpack assets after every successful rebuild.
 
 module.exports = {
   entry: "./src/index.js",
   output: {
-    filename: "bundle.js",
+    filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "dist/",
+    publicPath: "dist/", // for image path folder
   },
   mode: "development",
   module: {
@@ -21,8 +20,8 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ['@babel/env'],
-            plugins: ['@babel/plugin-proposal-class-properties'],
+            presets: ["@babel/env"], //
+            plugins: ["@babel/plugin-proposal-class-properties"], // this plugin
             //sourceType: "module", // ← THIS IS THE KEY FIX
           },
         },
@@ -32,13 +31,13 @@ module.exports = {
         type: "asset",
         parser: {
           dataUrlCondition: {
-            maxSize: 3 * 1024, // 3kilobytes
+            maxSize: 3 * 1024, // 3kilobytes // this way to reduce the size
           },
         },
       },
       {
         test: /\.txt/,
-        type: "asset/source",
+        type: "asset/source", // this is good for file optimization
       },
       {
         test: /\.css$/,
@@ -55,7 +54,8 @@ module.exports = {
   plugins: [
     new TerserPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'styles.css'
-    })
-  ]
+      filename: "styles.[contenthash].css",
+    }),
+    new CleanWebpackPlugin(),
+  ],
 };
