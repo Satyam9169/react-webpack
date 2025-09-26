@@ -3,13 +3,14 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin"); //TerserPlugin is a Webpack plugin that minifies / compresses your JavaScript code.
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // By default, this plugin will remove all files inside webpack's output.path directory, as well as all unused webpack assets after every successful rebuild.
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
   output: {
     filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "dist/", // for image path folder
+    publicPath: "", // for image path folder
   },
   mode: "development",
   module: {
@@ -46,8 +47,12 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"], 
         // use: ["style-loader", "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.hbs$/,
+        use: ["handlebars-loader"],
       },
     ],
   },
@@ -57,5 +62,12 @@ module.exports = {
       filename: "styles.[contenthash].css",
     }),
     new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      //it will create new folder and added the some meta data in html file
+      // filename: "subfolder/custome_filename.html",
+      title: "Hello World",
+      template: "./src/components/index.hbs",
+      description: "some description",
+    }),
   ],
 };
