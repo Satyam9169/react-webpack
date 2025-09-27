@@ -47,7 +47,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"], 
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
         // use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
@@ -66,7 +66,7 @@ module.exports = {
       //it will create new folder and added the some meta data in html file
       // filename: "subfolder/custome_filename.html",
       title: "Hello World",
-      template: "./src/components/index.hbs",
+      template: "src/components/index.hbs",
       description: "some description",
     }),
   ],
