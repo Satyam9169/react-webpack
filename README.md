@@ -5,7 +5,6 @@ As a senior developer:
 - What is webpack in react.js?  
 - Why we are using it and what is the purpose of using it?  
 - What is the advantage and disadvantage?  
-
 ---
 
 ## ChatGPT Answer
@@ -326,3 +325,22 @@ This gives the best of both worlds: ✅ Fresh updates when files change
 
 ✅ In short: Cache = storage of files for faster reuse. Contenthash = a
 way to "bust" the cache only when files actually change.
+
+
+## Key Webpack Concepts
+
+| Concept        | What it does                                | Why it matters                  |
+|----------------|--------------------------------------------|--------------------------------|
+| Minification   | Makes code smaller by removing spaces, comments | Faster load, better performance |
+| Tree Shaking   | Removes unused code from the bundle        | Smaller bundle, faster load     |
+| Source Map     | Maps minified code back to original source | Easier debugging                |
+
+
+// IMP INterview question
+// how to secure the api communicaiton ?
+// how to prevent from XSS ?
+// what is CORS and HOW TO prevent from CORS ERROR ?
+// Strong troubleshooting and debugging skills.
+// Knowledge of important web security concepts like CSP, same-site cookies, etc. Passionate
+// about web performance.
+// Knowledge of modern authentication mechanisms.

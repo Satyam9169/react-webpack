@@ -1,4 +1,95 @@
-// const { type } = require("os");
+const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+
+module.exports = (env, argv) => {
+  const isProduction = argv.mode === "production";
+
+  return {
+    entry: "./src/index.js",
+    mode: isProduction ? "production" : "development",
+
+    output: {
+      filename: "bundle.[contenthash].js",
+      path: path.resolve(__dirname, "dist"),
+      publicPath: "", // for images & assets
+      clean: true, // clean dist folder before build
+    },
+
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env"],
+              plugins: ["@babel/plugin-proposal-class-properties"],
+            },
+          },
+        },
+        {
+          test: /\.css$/i,
+          use: [MiniCssExtractPlugin.loader, "css-loader"],
+        },
+        {
+          test: /\.scss$/i,
+          use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        },
+        {
+          test: /\.hbs$/i,
+          use: "handlebars-loader",
+        },
+        {
+          test: /\.txt$/i,
+          type: "asset/source", // treat as raw string
+        },
+        {
+          test: /\.(png|jpg|jpeg|gif)$/i,
+          type: "asset/resource", // copy file to output
+        },
+      ],
+    },
+
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: "styles.[contenthash].css",
+      }),
+      new HtmlWebpackPlugin({
+        template: "./src/components/index.hbs",
+        title: "Hello World",
+        description: "Some description",
+      }),
+      new webpack.DefinePlugin({
+        "process.env.NODE_ENV": JSON.stringify(
+          isProduction ? "production" : "development"
+        ),
+      }),
+      ...(isProduction ? [new TerserPlugin()] : []), // minify only in production
+    ],
+
+    devtool: isProduction ? false : "inline-source-map",
+
+    devServer: {
+      static: {
+        directory: path.join(__dirname, "dist"),
+      },
+      compress: true,
+      port: 9000,
+      open: true,
+      hot: true,
+    },
+  };
+};
+
+
+
+
+
+/*
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin"); //TerserPlugin is a Webpack plugin that minifies / compresses your JavaScript code.
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -66,8 +157,9 @@ module.exports = {
       //it will create new folder and added the some meta data in html file
       // filename: "subfolder/custome_filename.html",
       title: "Hello World",
-      template: "src/components/index.hbs",
+      template: "./src/components/index.hbs",
       description: "some description",
     }),
   ],
 };
+*/
