@@ -30,5 +30,3 @@ try {
   console.error("Runtime error:", err);
   alert("Error: " + err.message);
 }
-
-
